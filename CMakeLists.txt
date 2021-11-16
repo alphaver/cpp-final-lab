@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(json_object)
-set(LIB_SOURCES src/json_primitive.cpp src/json_object.cpp src/json_array.cpp) 
-set(LIB_HEADERS include/json.h iinclude/json_value.h nclude/json_primitive.h include/json_object.h include/json_array.h)
+project(json)
+set(LIB_SOURCES ${PROJECT_SOURCE_DIR}/src/json.cpp) 
+set(LIB_HEADERS ${PROJECT_SOURCE_DIR}/include/json.h)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -g)
 
@@ -15,16 +15,17 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-add_library(json_object STATIC ${LIB_SOURCES})
-target_include_directories(json_object PUBLIC include)
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_executable(main src/main.cpp)
-target_link_libraries(main json_object)
+add_library(json STATIC ${LIB_SOURCES} ${LIB_HEADERS})
 
-# enable_testing()
-# add_executable(wordcounter_test src/word_counter_test.cpp)
-# target_link_libraries(wordcounter_test gtest_main)
-# target_link_libraries(wordcounter_test wordcounter)
+add_executable(main ${PROJECT_SOURCE_DIR}/src/main.cpp ${LIB_HEADERS})
+target_link_libraries(main json)
 
-# include(GoogleTest)
-# gtest_discover_tests(wordcounter_test)
+enable_testing()
+add_executable(json_test ${PROJECT_SOURCE_DIR}/src/json_test.cpp)
+target_link_libraries(json_test gtest_main)
+target_link_libraries(json_test json)
+
+include(GoogleTest)
+gtest_discover_tests(json_test)
