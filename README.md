@@ -1,4 +1,4 @@
-# Modern C++ usage practice, lab 1
+# Modern C++ usage practice, lab 2
 
 ## Problem statement
 
