@@ -1,16 +1,55 @@
-# Modern C++ usage practice, lab 2
+# Modern C++ usage practice, the final lab
 
 ## Problem statement
 
-Develop a library containing a set of objects to work with JSON. The library must provide the following features:
-- create an empty object
-- initialize objects with initializer lists
-- copy/move from another object
-- get the values of the elements
-- add new elements
-- modify existing elements
-- support C++ standard library and iterate through the object
+Develop a simple web service allowing for the storage of JSON documents.
+
+The service should handle the following queries:
+- `[POST] serviceurl` - add a document; an identifier (`id`) is returned
+- `[PUT] serviceurl/<id>` - update a document with the specified `id`
+- `[DELETE] serviceurl/<id>` - delete the document with the specified `id`
+- `[GET] serviceurl/<id>` - get a document with the specified `id`
+- `[GET] serviceurl` - get all stored documents
+- `[GET] serviceurl?key=<key>[&value=<value>]` - get all documents that have the specified `key` and `value` (if used)
+
+## Building, installation, and usage
+
+### Dependencies
+
+The following is required:
+- C++17 or higher
+- CMake 3.0 or higher (to build)
+- [fastcgi++](https://github.com/eddic/fastcgipp) 3.0 or higher
+- [lighttpd](https://www.lighttpd.net/) 1.4.63 or higher
+
+### Building
+
+To build FastCGI script use the following commands:
+```
+$ cd build
+$ cmake ..
+$ cmake --build . --target fcgi 
+```
+
+### Installation
+
+To install the script and prepare server directories use the `init.sh` script (after building):
+```
+# ./init.sh
+```
+
+To uninstall the script and destroy server directories use the `destroy.sh` script:
+```
+# ./destroy.sh
+```
+
+### Usage
+
+To run the server use `lighttpd`:
+```
+$ lighttpd -D -f lighttpd.conf
+```
 
 ## Author
 
-Daniil Lebedev aka [@alphaver](github.com/alphaver), student (4th year, group 13), FAMCS, BSU
+Daniil Lebedev aka [@alphaver](https://github.com/alphaver), student (4th year, group 13), FAMCS, BSU
