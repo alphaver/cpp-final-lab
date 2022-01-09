@@ -163,3 +163,74 @@ TEST(json_test, stdlib_arr)
     );
     EXPECT_EQ(sum, 15);
 }
+
+TEST(parse_test, true_val)
+{
+    static const json::value res = true;
+    static const std::string str_repr = "  true ";
+
+    json::value val = json::parse(str_repr);
+    EXPECT_EQ(val, res);
+}
+
+TEST(parse_test, int_val)
+{
+    static const json::value res = 10;
+    static const std::string str_repr = "10";
+
+    json::value val = json::parse(str_repr);
+    EXPECT_EQ(val, res);
+}
+
+TEST(parse_test, double_val)
+{
+    static const json::value res = -15.6e4;
+    static const std::string str_repr = "-15.6e4";
+
+    json::value val = json::parse(str_repr);
+    EXPECT_EQ(val, res);
+}
+
+TEST(parse_test, string_val)
+{
+    static const json::value res = "abra\nschwabra\"kadabra";
+    static const std::string str_repr = "\"abra\\nschwabra\\\"kadabra\"";
+
+    json::value val = json::parse(str_repr);
+    EXPECT_EQ(val, res);
+}
+
+TEST(parse_test, one_lvl_object_val)
+{
+    static const json::value res = json::object { 
+        { "hello", "hell" }, { "alpha", 10 } 
+    };
+    static const std::string str_repr = R"-( {
+        "hello": "hell", "alpha": 10
+    } )-";
+
+    json::value val = json::parse(str_repr);
+    EXPECT_EQ(val, res);
+}
+
+TEST(parse_test, one_lvl_array_val)
+{
+    static const json::value res = json::array { 10, "-1.5", json::null, true };
+    static const std::string str_repr = "[ 10, \"-1.5\", null, true ]";
+
+    json::value val = json::parse(str_repr);
+    EXPECT_EQ(val, res);
+}
+
+TEST(parse_test, array_in_obj_val)
+{
+    static const json::value res = json::object {
+        { "fibs", json::array { 1, 1, 2, 3, 5, 8, 13 } }
+    };
+    static const std::string str_repr = R"-( {
+        "fibs": [ 1, 1, 2, 3, 5, 8, 13 ]
+    } )-";
+
+    json::value val = json::parse(str_repr);
+    EXPECT_EQ(val, res);
+}
