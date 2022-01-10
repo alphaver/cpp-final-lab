@@ -4,7 +4,7 @@
 
 Develop a simple web service allowing for the storage of JSON documents.
 
-The service should handle the following queries:
+The service should handle the requests as follows:
 - `[POST] serviceurl` - add a document; an identifier (`id`) is returned
 - `[PUT] serviceurl/<id>` - update a document with the specified `id`
 - `[DELETE] serviceurl/<id>` - delete the document with the specified `id`
@@ -24,8 +24,9 @@ The following is required:
 
 ### Building
 
-To build FastCGI script use the following commands:
+To build FastCGI script use the shell commands:
 ```
+$ mkdir build
 $ cd build
 $ cmake ..
 $ cmake --build . --target fcgi 
