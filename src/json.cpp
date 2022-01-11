@@ -140,9 +140,12 @@ tokens_to_str(token_type tokens)
 struct parse_state
 {
     std::size_t begin, curr, end;
+    token last_token;
     const std::string &str;
     parse_state(const std::string &str)
-        : begin(0), curr(0), end(str.length()), str(str) {}
+        : begin(0), curr(0), end(str.length())
+        , last_token { token_type::unknown }
+        , str(str) {}
 };
 
 void
@@ -252,6 +255,11 @@ tokenize_number(parse_state &state)
 token
 extract_next_token(parse_state &state)
 {
+    if (state.last_token.type != token_type::unknown) {
+        token result = state.last_token;
+        state.last_token.type = token_type::unknown;
+        return result;
+    }
     skip_ws(state);
     if (state.curr == state.end)
         throw parse_exception("token expected");
@@ -287,6 +295,12 @@ extract_next_token(parse_state &state)
             std::string(1, state.str[state.curr]) 
         }
     );    
+}
+
+void
+return_last_token(parse_state &state, token &t)
+{
+    state.last_token = std::move(t);
 }
 
 value do_parse_value(parse_state &state);
@@ -337,6 +351,10 @@ do_parse_array(parse_state &state)
     array arr;
     token next_token { token_type::unknown };
     while (next_token.type != token_type::close_bracket) {
+        next_token = extract_next_token(state);
+        if (next_token.type == token_type::close_bracket)
+            continue;
+        return_last_token(state, next_token);
         value val = do_parse_value(state);
         arr.push_back(val);
         next_token = extract_next_token(state);
