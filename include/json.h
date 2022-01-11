@@ -39,6 +39,8 @@ public:
 };
 
 template <typename T>
+bool inside(const value &val) { return std::holds_alternative<T>(val); }
+template <typename T>
 T &get(value &val) { return std::get<T>(val); }
 template <typename T>
 T &&get(value &&val) { return std::get<T>(std::move(val)); }
