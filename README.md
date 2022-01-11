@@ -34,7 +34,7 @@ $ cmake --build . --target fcgi
 
 ### Installation
 
-To install the script and prepare server directories use the `init.sh` script (after building):
+To install the script and prepare server directories use the `init.sh` script (after building); before using the server you should log out and log in again:
 ```
 $ ./init.sh
 ```
