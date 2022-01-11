@@ -19,8 +19,8 @@ The service should handle the requests as follows:
 The following is required:
 - C++17 or higher
 - CMake 3.0 or higher (to build)
-- [fastcgi++](https://github.com/eddic/fastcgipp) 3.0 or higher
-- [lighttpd](https://www.lighttpd.net/) 1.4.63 or higher
+- [`fastcgi++`](https://github.com/eddic/fastcgipp) 3.0 or higher
+- [`lighttpd`](https://www.lighttpd.net/) 1.4.63 or higher
 
 ### Building
 
@@ -31,6 +31,8 @@ $ cd build
 $ cmake ..
 $ cmake --build . --target fcgi 
 ```
+
+`fastcgi++` should be built and installed before building the script.
 
 ### Installation
 
