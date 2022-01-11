@@ -36,12 +36,12 @@ $ cmake --build . --target fcgi
 
 To install the script and prepare server directories use the `init.sh` script (after building):
 ```
-# ./init.sh
+$ ./init.sh
 ```
 
 To uninstall the script and destroy server directories use the `destroy.sh` script:
 ```
-# ./destroy.sh
+$ ./destroy.sh
 ```
 
 ### Usage
