@@ -8,7 +8,8 @@ fi
 echo "Deleting the server root directory (${SCR_SERVER_PATH})..."
 sudo rm -rf "${SCR_SERVER_PATH}"
 
-sudo echo "Deleting the user www and its group..."
+echo "Deleting the user www and its group..."
 sudo userdel www
+sudo groupdel www
 
 echo "All done!"
